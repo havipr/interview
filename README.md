@@ -95,3 +95,48 @@ FROM
   GROUP BY a.ad_id
   ) AS impressions_clicks_table
 ORDER BY impressions_clicks_table.ad_id;
+
+9) CVR (conversion rate) for each ad. CVR = number of conversions / number of clicks.
+
+
+
+-- for Postgres
+
+SELECT conversions_clicks_table.ad_id,
+       (conversions_clicks_table.conversions * 100 / conversions_clicks_table.clicks)::FLOAT || '%' AS CVR
+FROM
+  (
+  SELECT a.ad_id,
+         SUM(CASE e.event_type WHEN 'conversion' THEN 1 ELSE 0 END) conversions,
+         SUM(CASE e.event_type WHEN 'click' THEN 1 ELSE 0 END) clicks
+  FROM Ads AS a
+    INNER JOIN Events AS e
+      ON a.ad_id = e.ad_id
+  GROUP BY a.ad_id
+  ) AS conversions_clicks_table
+ORDER BY conversions_clicks_table.ad_id;
+
+10) CTR and CVR for each ad broken down by day and hour (most recent first).
+
+
+
+-- for Postgres
+
+SELECT conversions_clicks_table.ad_id,
+       conversions_clicks_table.date,
+       conversions_clicks_table.hour,
+       (impressions_clicks_table.clicks * 100 / impressions_clicks_table.impressions)::FLOAT || '%' AS CTR,
+       (conversions_clicks_table.conversions * 100 / conversions_clicks_table.clicks)::FLOAT || '%' AS CVR
+FROM
+  (
+  SELECT a.ad_id, e.date, e.hour,
+         SUM(CASE e.event_type WHEN 'conversion' THEN 1 ELSE 0 END) conversions,
+         SUM(CASE e.event_type WHEN 'click' THEN 1 ELSE 0 END) clicks,
+         SUM(CASE e.event_type WHEN 'impression' THEN 1 ELSE 0 END) impressions
+  FROM Ads AS a
+    INNER JOIN Events AS e
+      ON a.ad_id = e.ad_id
+  GROUP BY a.ad_id, e.date, e.hour
+  ) AS conversions_clicks_table
+ORDER BY conversions_clicks_table.ad_id, conversions_clicks_table.date DESC, conversions_clicks_table.hour DESC, "CTR" DESC, "CVR" DESC;
+
