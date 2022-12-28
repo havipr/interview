@@ -16,6 +16,7 @@ Suppose we have the following schema with two tables: Ads and Events
 * Events(event_id, ad_id, source, event_type, date, hour)
 * event_type could be impression, click, conversion
 
+<img src="img/schema.png" />
 
 Write SQL queries to extract the following information:
 
