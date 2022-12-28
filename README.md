@@ -1,17 +1,4 @@
 
-<table>
-   <tr>
-      <td>⚠️</td>
-      <td>
-         The answers here are given by the community. Be careful and double check the answers before using them. <br>
-         If you see an error, please create a PR with a fix
-      </td>
-   </tr>
-</table>
-
-The list is based on [this post](https://medium.com/data-science-insider/technical-data-science-interview-questions-f61cd9cf218?source=friends_link&sk=01f4de0de746d28fe714d92a1e91e190)
-
-
 ## Table of contents
 
 * [SQL](#sql)
