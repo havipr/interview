@@ -218,3 +218,53 @@ ORDER BY conversions_clicks_table.ad_id, conversions_clicks_table.date DESC, con
 ```
 
 <br/>
+
+<br/>
+
+
+## Coding (Python)
+
+**1) FizzBuzz.** Print numbers from 1 to 100
+
+* If it’s a multiplier of 3, print “Fizz”
+* If it’s a multiplier of 5, print “Buzz”
+* If both 3 and 5 — “Fizz Buzz"
+* Otherwise, print the number itself
+
+Example of output: 1, 2, Fizz, 4, Buzz, Fizz, 7, 8, Fizz, Buzz, 11, Fizz, 13, 14, Fizz Buzz, 16, 17, Fizz, 19, Buzz, Fizz, 22, 23, Fizz, Buzz, 26, Fizz, 28, 29, Fizz Buzz, 31, 32, Fizz, 34, Buzz, Fizz, ...
+
+```python
+for i in range(1, 101):
+    if i % 3 == 0 and i % 5 == 0:
+        print('Fizz Buzz')
+    elif i % 3 == 0:
+        print('Fizz')
+    elif i % 5 == 0:
+        print('Buzz')
+    else:
+        print(i)
+```
+
+<br/>
+
+**2) Factorial**. Calculate a factorial of a number
+
+* `factorial(5)` = 5! = 1 * 2 * 3 * 4 * 5 = 120
+* `factorial(10)` = 10! = 1 * 2 * 3 * 4 * 5 * 6 * 7 * 8 * 9 * 10 = 3628800
+
+```python
+def factorial(n):
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+```
+
+We can also write this function using recursion:
+
+```python
+def factorial(n: int):
+    if n == 0 or n == 1:
+        return 1
+    else:
+        return n * factorial(n - 1)
