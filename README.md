@@ -267,4 +267,31 @@ def factorial(n: int):
     if n == 0 or n == 1:
         return 1
     else:
-        return n * factorial(n - 1)
+        return n * factorial(n - 1) 
+
+
+
+**4) STD**. Calculate the standard deviation of elements in a list.
+
+* `std([1, 2, 3, 4]) = 1.29`
+* `std([1]) = NaN` (use `float('NaN')`)
+* `std([]) = NaN`
+
+<img src="img/formula_std.png" />
+
+```python
+from math import sqrt
+from statistics import mean
+
+def std_dev(numbers):
+    if len(numbers) > 1:
+        avg = mean(numbers)
+        var = sum((i - avg) ** 2 for i in numbers) / (len(numbers) - 1)
+        std = sqrt(var)
+        return std
+    return float('NaN')
+```
+
+<br/>
+        
+        
