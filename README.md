@@ -293,5 +293,46 @@ def std_dev(numbers):
 ```
 
 <br/>
+
+<br/>
+
+**3) Mean**. Compute the mean of number in a list
+
+* `mean([4, 36, 45, 50, 75]) = 42`
+* `mean([]) = NaN` (use `float('NaN')`)
+
+<img src="img/formula_mean.png" />
+
+```python
+def mean(numbers):
+    if len(numbers) > 0:
+        return sum(numbers) / len(numbers)
+    return float('NaN')
+```
+
+<br/>
+
+**4) STD**. Calculate the standard deviation of elements in a list.
+
+* `std([1, 2, 3, 4]) = 1.29`
+* `std([1]) = NaN` (use `float('NaN')`)
+* `std([]) = NaN`
+
+<img src="img/formula_std.png" />
+
+```python
+from math import sqrt
+from statistics import mean
+
+def std_dev(numbers):
+    if len(numbers) > 1:
+        avg = mean(numbers)
+        var = sum((i - avg) ** 2 for i in numbers) / (len(numbers) - 1)
+        std = sqrt(var)
+        return std
+    return float('NaN')
+```
+
+<br/>
         
         
