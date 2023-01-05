@@ -334,5 +334,52 @@ def std_dev(numbers):
 ```
 
 <br/>
-        
+
+
+**5) RMSE**. Calculate the RMSE (root mean squared error) of a model. The function takes in two lists: one with actual values, one with predictions.
+
+* `rmse([1, 2], [1, 2]) = 0`
+* `rmse([1, 2, 3], [3, 2, 1]) = 1.63`
+
+<img src="img/formula_rmse.png" />
+
+```python
+import math
+
+def rmse(y_true, y_pred):
+    assert len(y_true) == len(y_pred), 'different sizes of the arguments'
+    squares = sum((x - y)**2 for x, y in zip(y_true, y_pred))
+    return math.sqrt(squares / len(y_true))
+```
+
+<br/>
+
+**6) Remove duplicates**. Remove duplicates in list. The list is not sorted and the order of elements from the original list should be preserved.
+
+* `[1, 2, 3, 1]` ⇒ `[1, 2, 3]`
+* `[1, 3, 2, 1, 5, 3, 5, 1, 4]` ⇒ `[1, 3, 2, 5, 4]`
+
+```python
+def remove_duplicates(lst):
+    new_list = []
+    mentioned_values = set()
+    for elem in lst:
+        if elem not in mentioned_values:
+            new_list.append(elem)
+            mentioned_values.add(elem)
+    return new_list
+
+# The above solution checks the values into a set and it is O(1) efficient using
+# a few of lines.
+# A shorter solution follows: it is O(n^2) but can be fine when lst has no "too
+# many elements" - the quantity depends by the running box.
+def remove_duplicates2(lst):
+    new_list = []
+    for elem in lst:
+        if elem not in new_list:
+            new_list.append(elem)
+    return new_list
+```
+
+<br/>
         
