@@ -382,4 +382,49 @@ def remove_duplicates2(lst):
 ```
 
 <br/>
+
+**7) Count**. Count how many times each element in a list occurs.
+
+`[1, 3, 2, 1, 5, 3, 5, 1, 4]` ⇒  
+* 1: 3 times
+* 2: 1 time
+* 3: 2 times
+* 4: 1 time
+* 5: 2 times
+
+```python
+numbers = [1, 3, 2, 1, 5, 3, 5, 1, 4]
+counter = dict()
+for elem in numbers:
+    counter[elem] = counter.get(elem, 0) + 1
+```
+or
+```python
+from collections import Counter
+
+numbers = [1, 3, 2, 1, 5, 3, 5, 1, 4]
+counter = Counter(numbers)
+```
+
+<br/>
+
+**8) Palindrome**. Is string a palindrome? A palindrome is a word which reads the same backward as forwards.
+
+* “ololo” ⇒ Yes
+* “cafe” ⇒ No
+
+```python
+def is_palindrome(s):
+    return s == s[::-1]
+```
+or
+```python
+def is_palindrome(s):
+    for i in range(len(s) // 2):
+        if s[i] != s[-i - 1]:
+            return False
+    return True
+```
+
+<br/>
         
