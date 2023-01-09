@@ -427,4 +427,33 @@ def is_palindrome(s):
 ```
 
 <br/>
+
+
+**9) Counter**. We have a list with identifiers of form “id-SITE”. Calculate how many ids we have per site.
+
+<img src="img/counter_1.png" />
+
+```python
+def counter(lst):
+    ans = {}
+    for i in lst:
+        site = i[-2:]
+        ans[site] = ans.get(site, 0) + 1
+    return ans
+```
+
+<br/>
+
+**10) Top counter**. We have a list with identifiers of form “id-SITE”. Show the top 3 sites. You can break ties in any way you want.
+
+<img src="img/counter_2_top.png" />
+
+```python
+def top_counter(lst):
+    site_dict = counter(lst)  # using last problem's solution
+    top_keys = sorted(site_dict, reverse=True, key=site_dict.get)[:3]
+    return {key: site_dict[key] for key in top_keys}
+```
+
+<br/>
         
