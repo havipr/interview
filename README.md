@@ -456,4 +456,36 @@ def top_counter(lst):
 ```
 
 <br/>
+
+11) RLE. Implement RLE (run-length encoding): encode each character by the number of times it appears consecutively.
+
+'aaaabbbcca' ⇒ [('a', 4), ('b', 3), ('c', 2), ('a', 1)]
+(note that there are two groups of 'a')
+def rle(s):
+    ans, cur, num = [], None, 0
+    for i in range(len(s)):
+        if i == 0:
+            cur, num = s[i], 1
+        elif cur != s[i]:
+            ans.append((cur, num))
+            cur, num = s[i], 1
+        else:
+            num += 1
+        if i == len(s) - 1:
+            ans.append((cur, num))
+    return ans
+Using itertools.groupby
+
+import itertools
+
+def rle(s):
+    return [(l, len(list(g))) for l, g in itertools.groupby(s)]
+
+12) Jaccard. Calculate the Jaccard similarity between two sets: the size of intersection divided by the size of union.
+
+jaccard({'a', 'b', 'c'}, {'a', 'd'}) = 1 / 4
+
+
+def jaccard(a, b):
+    return len(a & b) / len(a | b)
         
