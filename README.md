@@ -488,4 +488,72 @@ jaccard({'a', 'b', 'c'}, {'a', 'd'}) = 1 / 4
 
 def jaccard(a, b):
     return len(a & b) / len(a | b)
-        
+
+
+
+
+<br/>
+
+**13) IDF**. Given a collection of already tokenized texts, calculate the IDF (inverse document frequency) of each token.
+
+* input example: `[['interview', 'questions'], ['interview', 'answers']]`
+
+<img src="img/formula_idf_1.png" />
+
+Where:
+
+* t is the token,
+* n(t) is the number of documents that t occurs in,
+* N is the total number of documents
+
+```python
+from math import log10
+
+def idf1(docs):
+    docs = [set(doc) for doc in docs]
+    n_tokens = {}
+    for doc in docs:
+        for token in doc:
+            n_tokens[token] = n_tokens.get(token, 0) + 1
+    ans = {}
+    for token in n_tokens:
+        ans[token] = log10(len(docs) / (1 + n_tokens[token]))
+    return ans
+```
+
+```python
+import math
+
+def idf2(docs):
+    n_docs = len(docs)
+
+    docs = [set(doc) for doc in docs]
+    all_tokens = set.union(*docs)
+
+    idf_coefficients = {}
+    for token in all_tokens:
+        n_docs_w_token = sum(token in doc for doc in docs)
+        idf_c = math.log10(n_docs / (1 + n_docs_w_token))
+        idf_coefficients[token] = idf_c
+
+    return idf_coefficients
+```
+
+<br/>
+
+**14) PMI**. Given a collection of already tokenized texts, find the PMI (pointwise mutual information) of each pair of tokens. Return top 10 pairs according to PMI.
+
+* input example: `[['interview', 'questions'], ['interview', 'answers']]`
+
+PMI is used for finding collocations in text — things like “New York” or “Puerto Rico”. For two consecutive words, the PMI between them is:
+
+<img src="img/formula_pmi_1.png" />
+
+The higher the PMI, the more likely these two tokens form a collection. We can estimate PMI by counting:
+
+<img src="img/formula_pmi_2.png" />
+
+Where:
+* N is the total number of tokens in the text,
+* c(t1, t2) is the number of times t1 and t2 appear together,
+* c(t1) and c(t2) — the number of times they appear separately.
