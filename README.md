@@ -557,3 +557,147 @@ Where:
 * N is the total number of tokens in the text,
 * c(t1, t2) is the number of times t1 and t2 appear together,
 * c(t1) and c(t2) — the number of times they appear separately.
+
+## Algorithmic Questions
+
+**1) Two sum**. Given an array and a number N, return True if there are numbers A, B in the array such that A + B = N. Otherwise, return False.
+
+* `[1, 2, 3, 4], 5` ⇒ `True`
+* `[3, 4, 6], 6` ⇒ `False`
+
+Brute force, O(n<sup>2</sup>):
+
+```python
+def two_sum(numbers, target):
+    n = len(numbers)
+
+    for i in range(n):
+        for j in range(i + 1, n):
+            if numbers[i] + numbers[j] == target:
+                return True
+
+    return False
+```
+
+Linear, O(n):
+
+```python
+def two_sum(numbers, target):
+    index = {num: i for (i, num) in enumerate(numbers)}
+
+    n = len(numbers)
+
+    for i in range(n):
+        a = numbers[i]
+        b = target - a
+
+        if b in index:
+            j = index[b]
+            if i != j:
+                return True
+
+    return False
+```
+
+Using itertools.combinations
+```python
+from itertools import combinations
+
+def two_sum(numbers, target):
+    for elem in combinations(numbers, 2):
+        if elem[0] + elem[1] == target:
+            return True
+    return False
+```
+
+
+<br/>
+
+**2) Fibonacci**. Return the n-th Fibonacci number, which is computed using this formula:
+
+* F(0) = 0
+* F(1) = 1
+* F(n) = F(n-1) + F(n-2)
+* The sequence is: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...
+
+```python
+def fibonacci1(n):
+    '''naive, complexity = O(2 ** n)'''
+    if n == 0 or n == 1:
+        return n
+    else:
+        return fibonacci1(n - 1) + fibonacci1(n - 2)
+```
+
+```python
+def fibonacci2(n):
+    '''dynamic programming, complexity = O(n)'''
+    base1, base2 = 0, 1
+    for i in range(n):
+        base1, base2 = base2, base1 + base2
+    return base1
+```
+
+```python
+def fibonacci3(n):
+    '''matrix multiplication, complexity = O(log(n))'''
+    def mx_mul(m1, m2):
+        ans = [[0 for i in range(len(m2[0]))] for j in range(len(m1))]
+        for i in range(len(m1)):
+            for j in range(len(m2[0])):
+                for k in range(len(m2)):
+                    ans[i][j] += m1[i][k] * m2[k][j]
+        return ans
+    def pow(a, b):
+        ans = [[1, 0], [0, 1]]
+        while b > 0:
+            if b % 2 == 1:
+                ans = mx_mul(ans, a)
+            a = mx_mul(a, a)
+            b //= 2
+        return ans
+    ans = mx_mul(pow([[1, 1], [1, 0]], n), [[1], [0]])[1][0]
+    return ans
+```
+
+Memoization with a dictionary
+
+```python
+memo = {0: 0, 1: 1}
+
+def fibonacci4(n):
+    '''Top down + memorization (dictionary), complexity = O(n)'''
+    if n not in memo:
+        memo[n] = fibonacci4(n-1) + fibonacci4(n-2)
+    return memo[n]
+```
+
+Memoization with `lru_cache`
+
+```python
+from functools import lru_cache
+
+@lru_cache()
+def fibonacci4(n):
+    if n == 0 or n == 1:
+        return n
+    return fibonacci4(n - 1) + fibonacci4(n - 2)
+```
+
+```python
+def fibonacci5(n):
+    '''Top down + memorization (list), complexity = O(n) '''
+     if n == 1:
+        return 1
+    dic = [-1 for i in range(n)]
+    dic[0], dic[1] = 1, 2
+    def helper(n, dic):
+        if dic[n] < 0:
+            dic[n] = helper(n-1, dic) + helper(n-2, dic)
+        return dic[n]
+    return helper(n-1, dic)
+```
+
+
+
+<br/>
