@@ -701,3 +701,55 @@ def fibonacci5(n):
 
 
 <br/>
+
+
+
+
+<br/>
+
+**3) Most frequent outcome**. We have two dice of different sizes (D1 and D2). We roll them and sum their face values. What are the most probable outcomes?
+
+* 6, 6 ⇒ [7]
+* 2, 4 ⇒ [3, 4, 5]
+
+```python
+def most_frequent_outcome(d1, d2):
+    len_ans = abs(d1 - d2) + 1
+    mi = min(d1, d2)
+    ans = [mi + i for i in range(1, len_ans + 1)]
+    return ans
+```
+
+<br/>
+
+**4) Reverse a linked list**. Write a function for reversing a linked list.
+
+* The definition of a list node: `Node(value, next)`
+* Example: `a -> b -> c` ⇒ `c -> b -> a`
+
+```python
+def reverse_ll(head):
+    if head.next is not None:
+        last = None
+        point = head
+        while point is not None:
+            point.next, point, last = last, point.next, point
+```
+
+<br/>
+
+**5) Flip a binary tree**. Write a function for rotating a binary tree.
+
+* The definition of a tree node: `Node(value, left, right)`
+
+<img src="img/flip_binary_tree.png" />
+
+```python
+def flip_bt(head):
+    if head is not None:
+        head.left, head.right = head.right, head.left
+        flip_bt(head.left)
+        flip_bt(head.right)
+```
+
+<br/>
