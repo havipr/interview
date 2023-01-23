@@ -753,3 +753,49 @@ def flip_bt(head):
 ```
 
 <br/>
+
+<br/>
+
+**6) Binary search**. Return the index of a given number in a sorted array or -1 if it’s not there.
+
+* `[1, 4, 6, 10], 4` ⇒ `1`
+* `[1, 4, 6, 10], 3` ⇒ `-1`
+
+```python
+def binary_search(lst, num):
+    left, right = -1, len(lst)
+    while right - left > 1:
+        mid = (left + right) // 2
+        if lst[mid] >= num:
+            right = mid
+        else:
+            left = mid
+    if right < 0 or right >= len(lst) or lst[right] != num:
+        return -1
+    else:
+        return right
+```
+
+<br/>
+
+**7) Deduplication**. Remove duplicates from a sorted array.
+
+* `[1, 1, 1, 2, 3, 4, 4, 4, 5, 6, 6]` ⇒ `[1, 2, 3, 4, 5, 6]`
+
+```python
+def deduplication1(lst):
+    '''manual'''
+    ans = []
+    last = None
+    for i in lst:
+        if last != i:
+            ans.append(i)
+            last = i
+    return ans
+
+def deduplication2(lst):
+    # order is not guaranteed unless call sorted(list(set(lst))) to sort again
+    return list(set(lst))
+```
+
+<br/>
