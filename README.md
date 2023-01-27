@@ -799,3 +799,62 @@ def deduplication2(lst):
 ```
 
 <br/>
+
+
+<br/>
+
+**8) Intersection**. Return the intersection of two sorted arrays.
+
+* `[1, 2, 4, 6, 10], [2, 4, 5, 7, 10]` ⇒ `[2, 4, 10]`
+
+```python
+def intersection1(lst1, lst2):
+    '''reserves duplicates'''
+    ans = []
+    p1, p2 = 0, 0
+    while p1 < len(lst1) and p2 < len(lst2):
+        if lst1[p1] == lst2[p2]:
+            ans.append(lst1[p1])
+            p1, p2 = p1 + 1, p2 + 1
+        elif lst1[p1] < lst2[p2]:
+            p1 += 1
+        else:
+            p2 += 1
+    return ans
+
+def intersection2(lst1, lst2):
+    '''removes duplicates'''
+    # order is not guaranteed unless call sorted(...) to sort again
+    return list(set(lst1) & set(lst2))
+```
+
+<br/>
+
+**9) Union**. Return the union of two sorted arrays.
+
+* `[1, 2, 4, 6, 10], [2, 4, 5, 7, 10]` ⇒ `[1, 2, 4, 5, 6, 7, 10]`
+
+```python
+def union1(lst1, lst2):
+    '''reserves duplicates'''
+    ans = []
+    p1, p2 = 0, 0
+    while p1 < len(lst1) or p2 < len(lst2):
+        if lst1[p1] == lst2[p2]:
+            ans.append(lst1[p1])
+            p1, p2 = p1 + 1, p2 + 1
+        elif lst1[p1] < lst2[p2]:
+            ans.append(lst1[p1])
+            p1 += 1
+        else:
+            ans.append(lst2[p2])
+            p2 += 1
+    return ans
+
+def union2(lst1, lst2):
+    '''removes duplicates'''
+    # order is not guaranteed unless call sorted(...) to sort again
+    return list(set(lst1) | set(lst2))
+```
+
+<br/>
