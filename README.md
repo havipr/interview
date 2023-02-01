@@ -858,3 +858,136 @@ def union2(lst1, lst2):
 ```
 
 <br/>
+
+**10) Addition**. Implement the addition algorithm from school. Suppose we represent numbers by a list of integers from 0 to 9:
+
+* 12 is `[1, 2]`
+* 1000 is `[1, 0, 0, 0]`
+
+Implement the “+” operation for this representation
+
+* `[1, 1] + [1]` ⇒ `[1, 2]`
+* `[9, 9] + [2]` ⇒ `[1, 0, 1]`
+
+```python
+def addition(lst1, lst2):
+    def list_to_int(lst):
+        ans, base = 0, 1
+        for i in lst[::-1]:
+            ans += i * base
+            base *= 10
+        return ans
+    val = list_to_int(lst1) + list_to_int(lst2)
+    ans = [int(i) for i in str(val)]
+    return ans
+
+# another solution without int() and str() should be helpful
+def addition2(lst1, lst2):
+    if len(lst2) == 0 or lst2 == [0]:
+        return lst1[:]
+    elif len(lst1) == 0:
+        return lst2[:]
+    # lst1, lst2 not empty
+    digit1, lst1rest = lst1[-1], lst1[:-1]
+    digit2, lst2rest = lst2[-1], lst2[:-1]
+    digit, remainder = divmod(digit1 + digit2, 10)
+    lst = addition2(
+        addition2(lst1rest, [digit]),  # recursively add digit to lst1
+        lst2rest)  # and then continue to add lst2
+    ans = lst + [remainder]  # add the remainder as last digit
+    return ans
+```
+
+<br/>
+
+**11) Sort by custom alphabet**. You’re given a list of words and an alphabet (e.g. a permutation of Latin alphabet). You need to use this alphabet to order words in the list.
+
+Example:
+
+* Words: `['home', 'oval', 'cat', 'egg', 'network', 'green']`
+* Dictionary: `'bcdfghijklmnpqrstvwxzaeiouy'`
+
+Output:
+
+* `['cat', 'green', 'home', 'network', 'egg', 'oval']`
+
+```python
+def sort_by_custom_alphabet(dictionary, words):
+    words = sorted(words, key = lambda word: [dictionary.index(c) for c in word])
+    return words
+```
+
+<br/>
+
+**12) Check if a tree is a binary search tree**. In BST, the element in the root is:
+
+* Greater than or equal to the numbers on the left
+* Less than or equal to the number on the right
+* The definition of a tree node: `Node(value, left, right)`
+
+```python
+def check_is_bst(head, min_val=None, max_val=None):
+    """Check whether binary tree is binary search tree
+
+    Aside of the obvious node.left.val <= node.val <= node.right.val have to be
+    fulfilled, we also have to make sure that there is NO SINGLE leaves in the
+    left part of node have more value than the current node.
+    """
+    check_val = True
+    check_left = True
+    check_right = True
+
+    if min_val:
+        check_val = check_val and (head.val >= min_val)
+        min_new = min(min_val, head.val)
+    else:
+        min_new = head.val
+
+    if max_val:
+        check_val = check_val and (head.val <= max_val)
+        max_new = max(max_val, head.val)
+    else:
+        max_new = head.val
+
+    if head.left:
+        check_left = check_is_bst(head.left, min_val, max_new)
+
+    if head.right:
+        check_right = check_is_bst(head.right, min_new, max_val)
+
+    return check_val and check_left and check_right
+```
+
+<br/>
+
+
+**13) Maximum Sum Contiguous Subarray**. You are given an array `A` of length `N`, you have to find the largest possible sum of an Subarray, of array `A`.  
+* `[-2, 1, -3, 4, -1, 2, 1, -5, 4]` gives `6` as largest sum (from the subarray `[4, -1, 2, -1]`
+
+```python
+from sys import maxsize
+def max_sum_subarr(list1, size):
+      """Use Kadane's Algorithm for a optimal solution
+      Time Complexity: O(n)
+      Desciption: Use one variable for current sum, and one for Overall sum at an index.
+                  So here, the global_max will keep on updating the max sum at any index-1,
+                  and curr_max will check the max value at an index.
+                  And finally after iterating through the list, return the value of global_max variable which contains Maximum sum.
+      """
+    curr_max=list1[0]
+    global_max=list1[0]
+    for each in range(1, size):
+        curr_max = max(list1[each], curr_max+list1[each])
+        global_max = max(global_max, curr_max)
+    return global_max
+
+n = int(input())         
+list1 = []
+for i in range(0,n):
+    num = int(input())
+    list1.append(num)
+
+print(max_sum_subarr(list1, len(list1)))
+```
+
+<br/>
