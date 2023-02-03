@@ -1024,6 +1024,7 @@ def threeSum(array, target):
 ```
 
 **15) Find Duplicate in array** Given and array, find all duplicated value in the array
+// try not to do a loop with two iterations becasue it will take more mamory to execute 
 
 Example:
   
